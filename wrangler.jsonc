@@ -20,14 +20,14 @@
 		{
 			"binding": "DB",
 			"database_name": "vortexstack-db",
-			"database_id": "00000000-0000-0000-0000-000000000000"
+			"database_id": "6788565d-2380-4bd8-9440-627d52d817b8"
 		}
 	],
 	"kv_namespaces": [
 		{
 			"binding": "KV",
-			"id": "00000000000000000000000000000000",
-			"preview_id": "00000000000000000000000000000000"
+			"id": "006cdc367c7a491f855ab6fcd1c2e65b",
+			"preview_id": "f8db3b815e7d4ac797b41c3c00bfe9e1"
 		}
 	],
 	"send_email": [
