@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 const bricolage = Bricolage_Grotesque({
 	variable: "--font-bricolage",
@@ -21,7 +22,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body className={`${bricolage.variable} font-sans antialiased`}>
-				{children}
+				<TooltipProvider>{children}</TooltipProvider>
 			</body>
 		</html>
 	);
