@@ -20,7 +20,8 @@
 		{
 			"binding": "DB",
 			"database_name": "vortexstack-db",
-			"database_id": "6788565d-2380-4bd8-9440-627d52d817b8"
+			"database_id": "6788565d-2380-4bd8-9440-627d52d817b8",
+			"migrations_dir": "drizzle"
 		}
 	],
 	"kv_namespaces": [

@@ -1,13 +1,14 @@
 import { createDb } from "@/db";
 import { notes } from "@/db/schema";
-import { desc, eq } from "drizzle-orm";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { desc } from "drizzle-orm";
 
-export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export async function GET() {
 	try {
-		// @ts-expect-error - DB binding is injected by Cloudflare Workers
-		const db = createDb(process.env.DB as D1Database);
+		const { env } = getCloudflareContext();
+		const db = createDb(env.DB);
 		const allNotes = await db.query.notes.findMany({
 			orderBy: desc(notes.createdAt),
 			limit: 20,
@@ -35,8 +36,8 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// @ts-expect-error - DB binding is injected by Cloudflare Workers
-		const db = createDb(process.env.DB as D1Database);
+		const { env } = getCloudflareContext();
+		const db = createDb(env.DB);
 		const result = await db
 			.insert(notes)
 			.values({

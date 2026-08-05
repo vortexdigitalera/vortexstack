@@ -21,7 +21,7 @@ import {
 import { headers } from "next/headers"
 import { redirect } from "next/navigation"
 
-export const runtime = "edge"
+export const dynamic = "force-dynamic"
 
 export default async function Page() {
   const requestHeaders = await headers()

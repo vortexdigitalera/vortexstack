@@ -3,7 +3,7 @@ import { getCloudflareAccessUser } from "@/lib/cloudflare-access";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export default async function DashPage() {
 	const requestHeaders = await headers();

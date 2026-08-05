@@ -1,4 +1,6 @@
-export const runtime = "edge";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
 	try {
@@ -16,18 +18,8 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// @ts-expect-error - EMAIL binding is injected by Cloudflare Workers
-		const emailBinding = process.env.EMAIL as {
-			send: (options: {
-				to: string;
-				from: string;
-				subject: string;
-				html?: string;
-				text?: string;
-			}) => Promise<{ messageId: string }>;
-		};
-
-		const response = await emailBinding.send({
+		const { env } = getCloudflareContext();
+		const response = await env.EMAIL.send({
 			to,
 			from: "welcome@vortex.name.ng",
 			subject,

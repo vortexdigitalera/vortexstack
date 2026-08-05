@@ -1,7 +1,8 @@
 import { createDb } from "@/db";
 import { validateCredentials } from "@/lib/auth";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
-export const runtime = "edge";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
 	try {
@@ -17,8 +18,8 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// @ts-expect-error - DB binding is injected by Cloudflare Workers
-		const db = createDb(process.env.DB as D1Database);
+		const { env } = getCloudflareContext();
+		const db = createDb(env.DB);
 		const user = await validateCredentials(db, { email, password });
 
 		if (!user) {

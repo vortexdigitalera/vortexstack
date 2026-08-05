@@ -1,4 +1,6 @@
-export const runtime = "edge";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+
+export const dynamic = "force-dynamic";
 
 export async function GET(request: Request) {
 	try {
@@ -9,9 +11,8 @@ export async function GET(request: Request) {
 			return Response.json({ error: "Missing key" }, { status: 400 });
 		}
 
-		// @ts-expect-error - KV binding is injected by Cloudflare Workers
-		const kv = process.env.KV as KVNamespace;
-		const value = await kv.get(key);
+		const { env } = getCloudflareContext();
+		const value = await env.KV.get(key);
 
 		return Response.json({ key, value });
 	} catch (error) {
@@ -35,13 +36,12 @@ export async function POST(request: Request) {
 			);
 		}
 
-		// @ts-expect-error - KV binding is injected by Cloudflare Workers
-		const kv = process.env.KV as KVNamespace;
+		const { env } = getCloudflareContext();
 
 		if (ttl) {
-			await kv.put(key, value, { expirationTtl: ttl });
+			await env.KV.put(key, value, { expirationTtl: ttl });
 		} else {
-			await kv.put(key, value);
+			await env.KV.put(key, value);
 		}
 
 		return Response.json({ success: true, key });
